@@ -84,3 +84,10 @@ Each enemy has different properties such as height, animation frames, and behavi
 ---
 
 ## 📂 File Structure
+📁 Project<br>
+├── tumblepop.cpp<br>
+├── assets/<br>
+│ ├── textures/<br>
+│ ├── sounds/<br>
+│ └── fonts/<br>
+└── README.md
