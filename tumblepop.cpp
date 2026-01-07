@@ -1862,9 +1862,7 @@ void updateInvisibleMan(int enemy[], char** lvl){
     
     
     //wall collision
-    int checkX=(enemy[ENEMIES_DIR_X]>0)?
-                 (enemy[ENEMIES_X]+enemyWidth)/CELL_SIZE:
-                 enemy[ENEMIES_X]/CELL_SIZE;
+    int checkX=(enemy[ENEMIES_DIR_X]>0)?(enemy[ENEMIES_X]+enemyWidth)/CELL_SIZE:enemy[ENEMIES_X]/CELL_SIZE;
     int checkY=(enemy[ENEMIES_Y]+enemyHeight/2)/CELL_SIZE;
     
     if(checkY>=0&&checkY<LEVEL_HEIGHT&&checkX>=0&&checkX<LEVEL_WIDTH){
@@ -1874,9 +1872,7 @@ void updateInvisibleMan(int enemy[], char** lvl){
     }
     
     //edge detection
-    int edgeX=(enemy[ENEMIES_DIR_X]>0)?
-                (enemy[ENEMIES_X]+enemyWidth+enemySpeed)/CELL_SIZE:
-                (enemy[ENEMIES_X]-enemySpeed)/CELL_SIZE;
+    int edgeX=(enemy[ENEMIES_DIR_X]>0)?(enemy[ENEMIES_X]+enemyWidth+enemySpeed)/CELL_SIZE:(enemy[ENEMIES_X]-enemySpeed)/CELL_SIZE;
     int edgeY=(enemy[ENEMIES_Y]+enemyHeight+2)/CELL_SIZE;
     
     if(edgeY>=0&&edgeY<LEVEL_HEIGHT&&edgeX>=0&&edgeX<LEVEL_WIDTH){
@@ -2293,9 +2289,7 @@ void updateBossMinion(int* minion, char** lvl, float playerX, float playerY, boo
             minion[ENEMIES_X]+=minion[ENEMIES_DIR_X]*enemySpeed;
             
             //wall collision
-            int checkX=(minion[ENEMIES_DIR_X]>0)?
-                         (minion[ENEMIES_X]+enemyWidth+enemySpeed)/CELL_SIZE:
-                         (minion[ENEMIES_X]-enemySpeed)/CELL_SIZE;
+            int checkX=(minion[ENEMIES_DIR_X]>0)?(minion[ENEMIES_X]+enemyWidth+enemySpeed)/CELL_SIZE:(minion[ENEMIES_X]-enemySpeed)/CELL_SIZE;
             int checkY=(minion[ENEMIES_Y]+enemyHeight/2)/CELL_SIZE;
             
             if(checkY>=0&&checkY<LEVEL_HEIGHT&&checkX>=0&&checkX<LEVEL_WIDTH){
@@ -2305,9 +2299,7 @@ void updateBossMinion(int* minion, char** lvl, float playerX, float playerY, boo
             }
             
             //edge detection
-            int edgeX=(minion[ENEMIES_DIR_X]>0)?
-                        (minion[ENEMIES_X]+enemyWidth+enemySpeed)/CELL_SIZE:
-                        (minion[ENEMIES_X]-enemySpeed)/CELL_SIZE;
+            int edgeX=(minion[ENEMIES_DIR_X]>0)?(minion[ENEMIES_X]+enemyWidth+enemySpeed)/CELL_SIZE:(minion[ENEMIES_X]-enemySpeed)/CELL_SIZE;
             int edgeY=(minion[ENEMIES_Y]+enemyHeight+2)/CELL_SIZE;
             
             if(edgeY>=0&&edgeY<LEVEL_HEIGHT&&edgeX>0&&edgeX<LEVEL_WIDTH){
@@ -4405,46 +4397,46 @@ void saveGameState(float playerX, float playerY, int playerHealth, int score, in
     if(!saveFile)return;
     
     //save player data
-    saveFile << playerX << " " << playerY << " " << playerHealth << " " << score << " " << currentLevel << "\n";
+    saveFile<<playerX<<" "<<playerY<<" "<<playerHealth<<" "<<score<<" "<<currentLevel<<"\n";
     
     //save captured enemies
-    saveFile << captureCount << "\n";
+    saveFile<<captureCount<<"\n";
     for(int i=0;i<captureCount;i++){
-        saveFile << capturedQueue[i] << " ";
+        saveFile<<capturedQueue[i]<<" ";
     }
-    saveFile << "\n";
+    saveFile<<"\n";
     
     //save enemy count
-    saveFile << enemyCount << "\n";
+    saveFile<<enemyCount<<"\n";
     
     //save each enemy
     for(int i=0;i<enemyCount;i++){
         for(int j=0; j<ENEMY_TOTAL_PROPERTIES; j++){
-            saveFile << enemies[i][j] << " ";
+            saveFile<<enemies[i][j]<<" ";
         }
-        saveFile << "\n";
+        saveFile<<"\n";
     }
     
     //save projectile count
-    saveFile << projCount << "\n";
+    saveFile<<projCount<<"\n";
     
     //save each projectile
     for(int i=0;i<projCount;i++){
         for(int j=0; j<PROJECT_TOTAL_PROPERTIES; j++){
-            saveFile << projectiles[i][j] << " ";
+            saveFile<<projectiles[i][j]<<" ";
         }
-        saveFile << "\n";
+        saveFile<<"\n";
     }
     
     //save powerup count
-    saveFile << powerupCount << "\n";
+    saveFile<<powerupCount<<"\n";
     
     //save each powerup
     for(int i=0;i<powerupCount;i++){
         for(int j=0; j<POWERUP_TOTAL_PROPERTIES; j++){
-            saveFile << powerups[i][j] << " ";
+            saveFile<<powerups[i][j]<<" ";
         }
-        saveFile << "\n";
+        saveFile<<"\n";
     }
     
     saveFile.close();
@@ -4458,21 +4450,21 @@ bool loadGameState(float& playerX, float& playerY, int& playerHealth, int& score
 
 
     ifstream saveFile("savegame.txt");
-    if(!saveFile)return false;
+    if(!saveFile)return true;
     
     //load player data
-    saveFile >> playerX >> playerY >> playerHealth >> score >> currentLevel;
+    saveFile>>playerX>>playerY>>playerHealth>>score>>currentLevel;
     
     //load captured enemies
-    saveFile >> captureCount;
+    saveFile>>captureCount;
     delete[] capturedQueue;
     capturedQueue=new int[captureCount];
     for(int i=0;i<captureCount;i++){
-        saveFile >> capturedQueue[i];
+        saveFile>>capturedQueue[i];
     }
     
     //load enemy count
-    saveFile >> enemyCount;
+    saveFile>>enemyCount;
     
     //clear existing enemies
     cleanup2DArray(enemies, enemyCapacity);
@@ -4483,12 +4475,12 @@ bool loadGameState(float& playerX, float& playerY, int& playerHealth, int& score
     for(int i=0;i<enemyCount;i++){
         increaseSize(enemies, enemyCapacity, ENEMY_TOTAL_PROPERTIES);
         for(int j=0; j<ENEMY_TOTAL_PROPERTIES; j++){
-            saveFile >> enemies[i][j];
+            saveFile>>enemies[i][j];
         }
     }
     
     //load projectile count
-    saveFile >> projCount;
+    saveFile>>projCount;
     
     //clear existing projectiles
     cleanup2DArray(projectiles, projCapacity);
@@ -4499,12 +4491,12 @@ bool loadGameState(float& playerX, float& playerY, int& playerHealth, int& score
     for(int i=0;i<projCount;i++){
         increaseSize(projectiles, projCapacity, PROJECT_TOTAL_PROPERTIES);
         for(int j=0; j<PROJECT_TOTAL_PROPERTIES; j++){
-            saveFile >> projectiles[i][j];
+            saveFile>>projectiles[i][j];
         }
     }
     
     //load powerup count
-    saveFile >> powerupCount;
+    saveFile>>powerupCount;
     
     //clear existing powerups
     cleanup2DArray(powerups, powerupCapacity);
@@ -4515,7 +4507,7 @@ bool loadGameState(float& playerX, float& playerY, int& playerHealth, int& score
     for(int i=0;i<powerupCount;i++){
         increaseSize(powerups, powerupCapacity, POWERUP_TOTAL_PROPERTIES);
         for(int j=0; j<POWERUP_TOTAL_PROPERTIES; j++){
-            saveFile >> powerups[i][j];
+            saveFile>>powerups[i][j];
         }
     }
     
@@ -4560,7 +4552,7 @@ void loadLeaderboard(int scores[7]){
     if(!file)return;
     
     for(int i=0;i<MAX_LEADERBOARDS;i++){
-        file >> scores[i];
+        file>>scores[i];
     }
     
     file.close();
@@ -4573,7 +4565,7 @@ void saveLeaderboard(int scores[7]){
     if(!file)return;
     
     for(int i=0;i<MAX_LEADERBOARDS;i++){
-        file << scores[i] << "\n";
+        file<<scores[i]<<"\n";
     }
     
     file.close();
@@ -4916,7 +4908,7 @@ int mainMenu(RenderWindow& window, Font& font, Texture& bgTex, Texture& logoTex)
             if(ev.type == Event::MouseButtonPressed) {
                 if(ev.mouseButton.button == Mouse::Left) {
                     if(hoveredOption == 0) return 1;
-                    if(hoveredOption == 1 && saveExists) return 2;
+                    if(hoveredOption == 1 ) return 2;
                     if(hoveredOption == 2) displayLeaderboard(window, font, bgTex);
                     if(hoveredOption == 3) return displayLevels(window, font, bgTex);
                     if(hoveredOption == 4) return 0;
@@ -5170,11 +5162,7 @@ void levelUp(int& levelStartTime, int& score, char** lvl, int**& enemies,int& en
         if(playerHealth==3)score+=1500;
         
         createLevel3Layout(lvl);
-
-        initializeBossLevel(bossX, bossY, bossHealth, bossAngry,
-                           tentacles, tentacleCount, tentacleCapacity,
-                           minions, minionCount, minionCapacity,
-                           bossHDirection, bossVDirection, bossAtTopTimer);
+        initializeBossLevel(bossX, bossY, bossHealth, bossAngry,tentacles, tentacleCount, tentacleCapacity,minions, minionCount, minionCapacity,bossHDirection, bossVDirection, bossAtTopTimer);
     }
     else if(currentLevel>=5){
         int seconds=levelStartTime/60;
@@ -5620,7 +5608,7 @@ int main(){
                 if(vacuumActive)window.draw(vacuumSprite);
             }
             renderUI(window, score, playerHealth, captureCount, font);
-            if(playerHealth<=0){
+            if(playerHealth<=1){
                 gameOverScreen(window, score, currentLevel, font, menuBgTex);
                 gameRunning=false;
                 break;
